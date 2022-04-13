@@ -1,0 +1,14 @@
+com/adobe/bookstore/model/Book$BookBuilder.class
+com/adobe/bookstore/mapper/MapperBook.class
+com/adobe/bookstore/controller/BookStockResource.class
+com/adobe/bookstore/BookstoreApplication.class
+com/adobe/bookstore/service/impl/BookStockServiceImpl.class
+com/adobe/bookstore/utils/Utils.class
+com/adobe/bookstore/repository/OrderStockRepository.class
+com/adobe/bookstore/service/BookStockService.class
+com/adobe/bookstore/model/BookStock.class
+com/adobe/bookstore/repository/impl/BookStockRepositoryImpl.class
+com/adobe/bookstore/model/OrderStock.class
+com/adobe/bookstore/enums/Status.class
+com/adobe/bookstore/model/Book.class
+com/adobe/bookstore/repository/BookStockRepository.class

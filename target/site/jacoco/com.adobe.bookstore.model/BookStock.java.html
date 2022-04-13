@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BookStock.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">bookstore</a> &gt; <a href="index.source.html" class="el_package">com.adobe.bookstore.model</a> &gt; <span class="el_source">BookStock.java</span></div><h1>BookStock.java</h1><pre class="source lang-java linenums">package com.adobe.bookstore.model;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import lombok.Builder;
+
+import java.util.List;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = &quot;book_stock&quot;)
+@JsonSerialize
+<span class="fc" id="L14">public class BookStock {</span>
+
+    @Id
+    @Column(name = &quot;id&quot;, nullable = false)
+    private String id;
+
+    @Column(name = &quot;name&quot;, nullable = false)
+    private String name;
+
+    @Column(name = &quot;quantity&quot;, nullable = false)
+    private Integer quantity;
+
+    @ManyToMany(mappedBy = &quot;bookStocks&quot;)
+    private List&lt;OrderStock&gt; orderStock;
+
+    public String getId() {
+<span class="fc" id="L30">        return id;</span>
+    }
+
+    public void setId(String id) {
+<span class="fc" id="L34">        this.id = id;</span>
+<span class="fc" id="L35">    }</span>
+
+    public String getName() {
+<span class="fc" id="L38">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="fc" id="L42">        this.name = name;</span>
+<span class="fc" id="L43">    }</span>
+
+    public Integer getQuantity() {
+<span class="fc" id="L46">        return quantity;</span>
+    }
+
+    public void setQuantity(Integer quantity) {
+<span class="fc" id="L50">        this.quantity = quantity;</span>
+<span class="fc" id="L51">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

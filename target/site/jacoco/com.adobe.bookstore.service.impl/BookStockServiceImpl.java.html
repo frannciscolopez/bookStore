@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BookStockServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">bookstore</a> &gt; <a href="index.source.html" class="el_package">com.adobe.bookstore.service.impl</a> &gt; <span class="el_source">BookStockServiceImpl.java</span></div><h1>BookStockServiceImpl.java</h1><pre class="source lang-java linenums">package com.adobe.bookstore.service.impl;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import com.adobe.bookstore.enums.Status;
+import com.adobe.bookstore.mapper.MapperBook;
+import com.adobe.bookstore.model.Book;
+import com.adobe.bookstore.model.BookStock;
+import com.adobe.bookstore.model.OrderStock;
+import com.adobe.bookstore.model.UserOrderRequest;
+import com.adobe.bookstore.repository.BookStockRepository;
+import com.adobe.bookstore.repository.OrderStockRepository;
+import com.adobe.bookstore.service.BookStockService;
+import com.adobe.bookstore.utils.Utils;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class BookStockServiceImpl implements BookStockService {
+
+    private BookStockRepository bookStockRepository;
+    private OrderStockRepository orderStockRepository;
+    private Utils utils;
+    private MapperBook mapperBook;
+
+    @Autowired
+    public BookStockServiceImpl(BookStockRepository bookStockRepository, OrderStockRepository orderStockRepository,
+<span class="fc" id="L30">            Utils utils, MapperBook mapperBook) {</span>
+<span class="fc" id="L31">        this.bookStockRepository = bookStockRepository;</span>
+<span class="fc" id="L32">        this.orderStockRepository = orderStockRepository;</span>
+<span class="fc" id="L33">        this.utils = utils;</span>
+<span class="fc" id="L34">        this.mapperBook = mapperBook;</span>
+<span class="fc" id="L35">    }</span>
+
+
+    @Override
+    public OrderStock makeOrder(UserOrderRequest userOrder) {
+<span class="fc" id="L40">        OrderStock orderStock = createNewOrderStock(userOrder);</span>
+
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        if (orderBooksHaveStock(userOrder)) {</span>
+<span class="fc" id="L43">            updateAvailableStock(userOrder, orderStock);</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">            if (orderStock.getStatus().equals(Status.SUCCESFUL)) {</span>
+<span class="fc" id="L45">                return orderStock;</span>
+            }
+<span class="fc" id="L47">            return orderCancelled(orderStock);</span>
+        }
+<span class="nc" id="L49">        return orderCancelled(orderStock);</span>
+    }
+
+    private void updateAvailableStock(UserOrderRequest userOrder, OrderStock orderStock) {
+<span class="fc" id="L53">        userOrder.getUserOrder().stream().forEach(book -&gt; updateStock(book, orderStock));</span>
+<span class="fc" id="L54">    }</span>
+
+    private void updateStock(Book book, OrderStock orderStock) {
+<span class="fc" id="L57">        Optional&lt;BookStock&gt; bookToUpdate = bookStockRepository.findById(book.getId());</span>
+        try {
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">            if (bookToUpdate.isPresent()) {</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">                if (utils.evaluateQuantityInOrder(bookToUpdate.get().getQuantity(), book.getQuantity())) {</span>
+<span class="fc" id="L61">                    updateOrderStatus(orderStock, Status.SUCCESFUL);</span>
+<span class="fc" id="L62">                    bookToUpdate.get().setQuantity(bookToUpdate.get().getQuantity() - book.getQuantity());</span>
+<span class="fc" id="L63">                    bookStockRepository.save(bookToUpdate.get());</span>
+                }
+            }
+<span class="nc" id="L66">        } catch (Exception e) {</span>
+<span class="nc" id="L67">            System.out.println(&quot;Update stock failure&quot;);</span>
+<span class="fc" id="L68">        }</span>
+<span class="fc" id="L69">    }</span>
+
+    private boolean orderBooksHaveStock(UserOrderRequest userOrder) {
+<span class="fc" id="L72">        return userOrder.getUserOrder().stream().allMatch(predicate -&gt; {</span>
+<span class="fc" id="L73">            Optional&lt;BookStock&gt; book = bookStockRepository.findById(predicate.getId());</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">            if (book.isPresent()) {</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">                return book.get().getQuantity() &gt; 0;</span>
+            }
+<span class="nc" id="L77">            return false;</span>
+        });
+    }
+
+    private OrderStock createNewOrderStock(UserOrderRequest userOrder) {
+<span class="fc" id="L82">        OrderStock orderStock = new OrderStock();</span>
+<span class="fc" id="L83">        orderStock.setStatus(Status.UNDEFINED);</span>
+<span class="fc" id="L84">        orderStock.setId(utils.createOrderStockId());</span>
+<span class="fc" id="L85">        orderStock.setBookStocks(mapperBook.mapper(userOrder.getUserOrder()));</span>
+<span class="fc" id="L86">        orderStock.setOrderDate(LocalDateTime.now());</span>
+<span class="fc" id="L87">        orderStockRepository.save(orderStock);</span>
+<span class="fc" id="L88">        return orderStock;</span>
+    }
+
+    private OrderStock orderCancelled(OrderStock orderStock) {
+<span class="fc" id="L92">        updateOrderStatus(orderStock, Status.CANCELLED);</span>
+<span class="fc" id="L93">        return orderStock;</span>
+    }
+
+    private void updateOrderStatus(OrderStock orderStock, Status status) {
+<span class="fc" id="L97">        OrderStock orderStockToSave = orderStockRepository.getById(orderStock.getId());</span>
+<span class="fc" id="L98">        orderStockToSave.setStatus(status);</span>
+<span class="fc" id="L99">        orderStockRepository.save(orderStockToSave);</span>
+<span class="fc" id="L100">        orderStock.setStatus(status);</span>
+<span class="fc" id="L101">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
