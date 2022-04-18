@@ -1,21 +1,21 @@
 # Commerce Services - Technical Interview
 
-### How to run
+### How to run Java Project
 
 Building
 ```shell
-$ ./mvnw compile
+./mvnw compile
 ```
 
 Test
 ```shell
-$ ./mvnw test
+./mvnw test
 ```
 
 Start the application
 
 ```shell
-$ ./mvnw spring-boot:run
+./mvnw spring-boot:run
 ```
 
 ### How to test
@@ -82,4 +82,12 @@ http://localhost:8080/books_stock/orders
         ]
     }
 ]
+
+
+
+### How to run docker
+
+```shell
+./docker compose up -d
+```
 
