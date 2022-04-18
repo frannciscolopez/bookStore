@@ -29,7 +29,7 @@ http://localhost:8080/books_stock/makeOrder
 
 BODY:
 
-
+```
  {
 
   "userOrder" :  [
@@ -43,10 +43,11 @@ BODY:
     ]
 
 }
+```
 
 ### RESPONSE 
 
-Id of the orde: 1.810001012623587E9
+Id of the order: 1.810001012623587E9
 
 
 2. GET ALL THE ORDERS.
@@ -56,7 +57,7 @@ Id of the orde: 1.810001012623587E9
 http://localhost:8080/books_stock/orders
 
 ### RESPONSE 
-
+```
 [
     {
         "id": "1.829429931559126E9", -- id of the request 
@@ -84,7 +85,7 @@ http://localhost:8080/books_stock/orders
     }
 ]
 
-
+```
 ## Devops part
 
 ### How to run docker
