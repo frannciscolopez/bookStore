@@ -116,3 +116,16 @@ api.oursaas.org:4231
 ```
 static.oursaas.org:4566
 ```
+### How to test Jenkinsfile
+
+1. Install locally Jenkins: https://www.jenkins.io/doc/pipeline/tour/getting-started/
+2. Create pipeline:
+     2.1 New Item
+     2.2 Pipeline
+     2.3 Pipeline -> Definition -> Pipeline script from SCM
+     2.4 SCM -> Git
+     2.5 Repository URL -> https://github.com/frannciscolopez/bookStore
+     2.6 Apply
+3. Go to the pipeline.
+4. Build now.
+
