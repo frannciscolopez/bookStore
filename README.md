@@ -90,6 +90,13 @@ http://localhost:8080/books_stock/orders
 
 ### How to run docker
 
+Add this 2 lines in /etc/hosts file:
+```
+127.0.0.1 api.oursaas.org
+127.0.0.1 static.oursaas.org
+```
+### How to run docker
+
 ```shell
 ./docker compose up -d
 ```
@@ -97,14 +104,15 @@ http://localhost:8080/books_stock/orders
 ### How to test aws services
 
 #### dynamodb
-
-localhost:4565
+```
+api.oursaas.org:4565
+```
 
 #### postgres
-
-localhost:4231
-
+```
+api.oursaas.org:4231
+```
 #### s3
-
-localhost:4566
-
+```
+static.oursaas.org:4566
+```
