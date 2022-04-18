@@ -128,4 +128,7 @@ static.oursaas.org:4566
      2.6 Apply
 3. Go to the pipeline.
 4. Build now.
+<img width="1410" alt="Captura de pantalla 2022-04-18 a las 23 28 35" src="https://user-images.githubusercontent.com/22669529/163884517-230845ee-a55d-4ac2-8475-63200bcb07e7.png">
+
+
 
