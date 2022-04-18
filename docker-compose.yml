@@ -1,0 +1,57 @@
+version: "2"
+services:
+    api-svc:
+        image: nginx:latest
+        deploy:
+          replicas: 3
+          resources:
+              limits:
+                  cpus: "0.5"
+        depends_on:
+          - postgresql
+          - dynamodb
+        
+    postgresql:
+      container_name: postgresql
+      image: 'postgres:12'
+      ports:
+        - '4231:4231'
+      environment:
+        POSTGRES_USER: test
+        POSTGRES_PASSWORD: test
+        POSTGRES_URL: test.test.test.rds.amazonaws.com
+        POSTGRES_PORT: 4231
+    dynamodb:
+      container_name: dynamodb
+      image: localstack/localstack:latest
+      environment: 
+        - AWS_DEFAULT_REGION=us-east-1
+        - EDGE_PORT=4565
+        - SERVICES=dynamodb
+      ports:
+        - '4565:4565'
+      volumes:
+        - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+        - "/var/run/docker.sock:/var/run/docker.sock"
+
+    static-svc:
+        image: nginx:latest
+        deploy:
+          replicas: 3
+        depends_on:
+          - s3
+    s3:  
+      container_name: s3
+      image: localstack/localstack:latest
+      environment:
+        - AWS_DEFAULT_REGION=us-east-1
+        - EDGE_PORT=4566
+        - SERVICES=s3
+      ports:
+        - '4566-4583:4566-4583'
+      volumes:
+        - "${TEMPDIR:-/tmp/localstack}:/tmp/localstack"
+        - "/var/run/docker.sock:/var/run/docker.sock"
+volumes:
+  dynamodata: {}
+
