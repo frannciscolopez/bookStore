@@ -1,21 +1,22 @@
 # Commerce Services - Technical Interview
 
-### How to run
+## Developer part
+### How to run Java Project
 
 Building
 ```shell
-$ ./mvnw compile
+./mvnw compile
 ```
 
 Test
 ```shell
-$ ./mvnw test
+./mvnw test
 ```
 
 Start the application
 
 ```shell
-$ ./mvnw spring-boot:run
+./mvnw spring-boot:run
 ```
 
 ### How to test
@@ -82,4 +83,27 @@ http://localhost:8080/books_stock/orders
         ]
     }
 ]
+
+
+## Devops part
+
+### How to run docker
+
+```shell
+./docker compose up -d
+```
+
+### How to test aws services
+
+#### dynamodb
+
+localhost:4565
+
+#### postgres
+
+localhost:4231
+
+#### s3
+
+localhost:4566
 
