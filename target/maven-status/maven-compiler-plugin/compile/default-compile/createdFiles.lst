@@ -11,4 +11,5 @@ com/adobe/bookstore/repository/impl/BookStockRepositoryImpl.class
 com/adobe/bookstore/model/OrderStock.class
 com/adobe/bookstore/enums/Status.class
 com/adobe/bookstore/model/Book.class
+com/adobe/bookstore/model/UserOrderRequest.class
 com/adobe/bookstore/repository/BookStockRepository.class
