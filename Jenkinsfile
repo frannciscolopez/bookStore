@@ -31,6 +31,7 @@ pipeline {
                             GLOBAL_ENVIRONMENT = 'NO_DEPLOYMENT'
                             break
                     }
+                }
             }
         }  
 
@@ -63,13 +64,7 @@ pipeline {
                 }
             }
         }
-
-
-        stage ('Testing Stage') {
-            steps {
-                    sh 'mvn test'
-            }
-        }
+    
     }
 }
 
