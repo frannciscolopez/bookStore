@@ -10,7 +10,7 @@ services:
         depends_on:
           - postgresql
           - dynamodb
-        
+  # for security reasons I don't specify the keys   
     postgresql:
       container_name: postgresql
       image: 'postgres:12'
