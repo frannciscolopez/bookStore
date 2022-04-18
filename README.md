@@ -91,3 +91,17 @@ http://localhost:8080/books_stock/orders
 ./docker compose up -d
 ```
 
+### How to test aws services
+
+## dynamodb
+
+localhost:4565
+
+## postgres
+
+localhost:4231
+
+## s3
+
+localhost:4566
+
