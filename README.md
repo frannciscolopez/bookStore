@@ -95,15 +95,15 @@ http://localhost:8080/books_stock/orders
 
 ### How to test aws services
 
-### dynamodb
+#### dynamodb
 
 localhost:4565
 
-### postgres
+#### postgres
 
 localhost:4231
 
-### s3
+#### s3
 
 localhost:4566
 
