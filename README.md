@@ -1,4 +1,4 @@
-# Commerce Services - Technical Interview
+# Commerce Services
 
 ## Developer part
 ### How to run Java Project
