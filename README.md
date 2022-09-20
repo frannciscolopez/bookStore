@@ -1,6 +1,5 @@
 # Commerce Services
 
-## Developer part
 ### How to run Java Project
 
 Building
